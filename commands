@@ -1,3 +1,4 @@
 kubectl get nodes
 kubectl get pods -A --watch
 kubectl get ns 
+kubectl delete po pod1
