@@ -2,3 +2,5 @@ kubectl get nodes
 kubectl get pods -A --watch
 kubectl get ns 
 kubectl delete po pod1
+kubectl get pods -o wide
+kubectl exec -it pod /bin/bash
