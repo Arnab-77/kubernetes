@@ -1,1 +1,31 @@
-kubectl logs foo | grep 'unable-to-access-website' > /opt/KULM00201/foo
+1.kubectl logs foo | grep 'unable-to-access-website' > /opt/KULM00201/foo
+2.kubectl run Pod/kucc8 --image=nginx --dry-run=client -o yaml
+================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: kucc8
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  - image: redis
+    name: redis
+  - image: memcached
+    name: memcached
+==================================================================
+kubectl apply -f multicontainer.yaml
+3.kubectl create deployment nginx-app --image=nginx:1.11.10-alpine --replicas=3
+4.kubectl create ns my-website
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: mongo
+  namespace: my-website
+spec:
+  containers:
+  - image: mongo
+    name: mongo
+kubectl apply -f pod.yaml
