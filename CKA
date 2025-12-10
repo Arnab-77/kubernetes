@@ -1,0 +1,1 @@
+kubectl logs foo | grep 'unable-to-access-website' > /opt/KULM00201/foo
