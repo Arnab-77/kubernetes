@@ -32,3 +32,50 @@ kubectl apply -f pod.yaml
 5.kubectl scale deployment/nginx-app --replicas=6
 6.kubectl describe node | grep -i -A5 taints
 7.kubectl top pod -l name=cpu-utilizer >> /opt/KUTR00102/KUTR00102.txt
+8. kubectl drain node1 --ignore-daemonsets --delete-emptydir-data
+=====================================================================
+9.pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-config
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostpath:
+    path: "/srv/app-config"
+kubectl apply -f pv.yaml
+========================================================================
+10.pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-volume
+spec:
+  storageClassName: csi-hostpath-sc
+  accessModes:
+     - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+kubectl apply -f pvc.yaml
+
+pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server
+spec:
+  volumes:
+    - name: vol1
+      persistentVolumeClaim:
+          claimName: pv-volume
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts: 
+        - mountPath: "/usr/share/nginx/html"
+          name: vol1
+kubectl apply -f pod.yaml
