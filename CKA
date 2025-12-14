@@ -30,4 +30,5 @@ spec:
     name: mongo
 kubectl apply -f pod.yaml
 5.kubectl scale deployment/nginx-app --replicas=6
-6.
+6.kubectl describe node | grep -i -A5 taints
+7.kubectl top pod -l name=cpu-utilizer >> /opt/KUTR00102/KUTR00102.txt
